@@ -1,0 +1,36 @@
+{
+  "name": "waveform-path",
+  "version": "0.0.1",
+  "description": "Generator waveform paths for SVG",
+  "main": "dist/waveform-path.min.js",
+  "scripts": {
+    "build": "gulp && cp dist/waveform-path.min.js docs/waveform-path.min.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jerosoler/waveform-path.git"
+  },
+  "keywords": [
+    "waveform",
+    "path",
+    "svg",
+    "audio-visualizer",
+    "audio",
+    "webaudio",
+    "aduio-player",
+    "music",
+    "path"
+  ],
+  "author": "Jero Soler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jerosoler/waveform-path/issues"
+  },
+  "homepage": "https://github.com/jerosoler/waveform-path#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-rename": "^2.0.0",
+    "gulp-uglify": "^3.0.2"
+  }
+}
