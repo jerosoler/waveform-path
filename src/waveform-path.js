@@ -40,9 +40,9 @@ export const linearPath = (audioBuffer, options) => {
 
     for(let f = 0; f < normalizeDataLength; f++) {
         if(f>0) {
-            const pathlenght = path.length;
-            const lastvalue = path.charAt(pathlenght - 1);
-            if(lastvalue == ";" || pathlenght === 0) {
+            const pathlength = path.length;
+            const lastvalue = path.charAt(pathlength - 1);
+            if(lastvalue == ";" || pathlength === 0) {
                 path+=' M 0 0 ;';
             } else {
                 path += ';';
@@ -258,9 +258,9 @@ export const polarPath = (audioBuffer, options) => {
 
     for(let f = 0; f < normalizeDataLength; f++) {
         if(f>0) {
-            const pathlenght = path.length;
-            const lastvalue = path.charAt(pathlenght - 1);
-            if(lastvalue == ";" || pathlenght === 0) {
+            const pathlength = path.length;
+            const lastvalue = path.charAt(pathlength - 1);
+            if(lastvalue == ";" || pathlength === 0) {
                 path+=' M 0 0 ;';
             } else {
                 path += ';';

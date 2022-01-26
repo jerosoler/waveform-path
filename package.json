@@ -18,9 +18,9 @@
     "audio-visualizer",
     "audio",
     "webaudio",
-    "aduio-player",
+    "audio-player",
     "music",
-    "path"
+    "webaudio"
   ],
   "author": "Jero Soler",
   "license": "MIT",

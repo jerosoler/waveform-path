@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎙</text></svg>">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waveform-path - Generator waveform paths for SVG</title>
+    <meta name="description" content="Generator waveform paths for SVG">
+    <meta name="author" content="Jero Soler">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/themes/prism.min.css" integrity="sha256-cuvic28gVvjQIo3Q4hnRpQSNB0aMw3C+kjkR0i+hrWg=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/themes/prism-tomorrow.min.css" integrity="sha256-xevuwyBEb2ZYh4nDhj0g3Z/rDBnM569hg9Vq6gEw/Sg=" crossorigin="anonymous">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+    <header id="header">
+        <h1 class="logo">waveform-path</h1>
+        <svg id="logo" height="140" width="800">
+            <defs>
+                <linearGradient id="logograd" x1="0%" y1="50%" x2="100%" y2="50%" >
+                    <stop offset="0%" style="stop-color:rgb(0,255,10);stop-opacity:1.00" />
+                    <stop offset="25%" style="stop-color:rgb(0,188,212);stop-opacity:0.70" />
+                    <stop offset="50%" style="stop-color:rgb(238,130,238);stop-opacity:1.00" />
+                    <stop offset="75%" style="stop-color:rgb(103,58,183);stop-opacity:0.70" />
+                    <stop offset="100%" style="stop-color:rgb(233,30,99);stop-opacity:1.00" />
+                </linearGradient>
+            </defs>
+            <path stroke-width="3px" fill="none" stroke="url(#logograd)" d="" />
+        </svg>
+    </header>
+    <div class="wrapper">
+        <nav>
+            <a href="#about">About</a>
+            <a href="#install">Install</a>
+            <a href="#howtouse">How to use</a>
+            <a href="#demo">Demo</a>
+            <a href="https://github.com/jerosoler/waveform-path" target="_blank">Github</a>
+        </nav>
+        <h3 id="about">About</h3>
+        <p>Reading CSS-Tricks i discovered the <a href="https://css-tricks.com/making-an-audio-waveform-visualizer-with-vanilla-javascript/" target="_blank">post</a> of <a href="https://twitter.com/ilikescience" target="_blank">Matthew Ström</a> on how to create a waveform which helped me create the library. Look for similar libraries to create custom waveforms. But almost all of them had the same type of wave and based on canvas and not on svg.</p>
+        <p>I think svg allows us a lot of customization with css filters or gradients or just lossless scaling. We can also store a path on the server and then retrieve it.</p>
+        <p>With the library we can create two types of waveforms linear and polar. I each method has 3 different types "steps", "mirror" and "bars".</p>
+        <h3 id="install">Install</h3>
+        <h4>NPM</h4>
+        <div class="codebox" data-ioaa-animation="animateLeft">
+                <div class="preheader">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="54" height="14" viewBox="0 0 54 14"><g fill="none" fill-rule="evenodd" transform="translate(1 1)"><circle cx="6" cy="6" r="6" fill="#FF5F56" stroke="#E0443E" stroke-width=".5"></circle><circle cx="26" cy="6" r="6" fill="#FFBD2E" stroke="#DEA123" stroke-width=".5"></circle><circle cx="46" cy="6" r="6" fill="#27C93F" stroke="#1AAB29" stroke-width=".5"></circle></g></svg>
+                </div>
+                <pre><code class="language-bash">npm install waveform-path -s</code></pre>
+        </div>
+        <h4>Download</h4>
+        <p>Download the last realease of <a target="_blank" href="https://github.com/jerosoler/waveform-path">repo</a> and copy <strong>waveform-path.min.js</strong> from dist folder.</p>
+
+        <h3 id="howtouse">How to use</h3>
+        <p>This example is the waveform of the logo of this website.</p>
+        <div class="codebox" >
+            <div class="preheader">
+                <svg xmlns="http://www.w3.org/2000/svg" width="54" height="14" viewBox="0 0 54 14"><g fill="none" fill-rule="evenodd" transform="translate(1 1)"><circle cx="6" cy="6" r="6" fill="#FF5F56" stroke="#E0443E" stroke-width=".5"></circle><circle cx="26" cy="6" r="6" fill="#FFBD2E" stroke="#DEA123" stroke-width=".5"></circle><circle cx="46" cy="6" r="6" fill="#27C93F" stroke="#1AAB29" stroke-width=".5"></circle></g></svg>
+            </div>
+            <pre><code class="language-html"><xmp><script type="module">
+                import { getAudioData, linearPath, polarPath } from "waveform-path";
+            
+                async function AudioPath(file) {
+                    const audioData = await getAudioData(file);
+            
+                    const pathLogo = linearPath(audioData,{ samples: 100,  type: 'steps', top: 20 });
+                    document.querySelector("#logo path").setAttribute('d', pathLogo);
+            
+                }
+                AudioPath("hello_world.ogg");
+</script></xmp></code></pre>
+        </div>
+
+        <h4>Linear Options</h4>
+
+        <table >
+            <thead>
+                <th>
+                    Option
+                </th>
+                <th>
+                    Default
+                </th>
+                <th>
+                    Description
+                </th>
+            </thead>
+            <tr>
+                <td>
+                    channel
+                </td>
+                <td>
+                    0
+                </td>
+                <td>
+                    Channel audio for generate wave
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    samples
+                </td>
+                <td>
+                    length
+                </td>
+                <td>
+                    Length of the data
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    height
+                </td>
+                <td>
+                    100
+                </td>
+                <td>
+                    Height of path 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    width
+                </td>
+                <td>
+                    800
+                </td>
+                <td>
+                    Width of path 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    top
+                </td>
+                <td>
+                    0
+                </td>
+                <td>
+                    Top margin from path to svg
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    left
+                </td>
+                <td>
+                    0
+                </td>
+                <td>
+                    Left margin from path to svg
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    type
+                </td>
+                <td>
+                    'steps'
+                </td>
+                <td>
+                    'steps', 'mirror' or 'bars'
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    paths
+                </td>
+                <td>
+                    [{d:'Q', sx: 0, sy:0, x: 50, y: 100, ex:100, ey:0}]
+                </td>
+                <td>
+                    Array of commands to create the path.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    animation
+                </td>
+                <td>
+                    false
+                </td>
+                <td>
+                    To create animations, paths separated by commas
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    animationframes
+                </td>
+                <td>
+                    10
+                </td>
+                <td>
+                    Frames per second of the animation
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    normalize
+                </td>
+                <td>
+                    true
+                </td>
+                <td>
+                    Normalize audio to adjust waveform
+                </td>
+            </tr>
+        </table>
+
+        <h4>Polar Options</h4>
+
+        <table >
+            <thead>
+                <th>
+                    Option
+                </th>
+                <th>
+                    Default
+                </th>
+                <th>
+                    Description
+                </th>
+            </thead>
+            <tr>
+                <td>
+                    channel
+                </td>
+                <td>
+                    0
+                </td>
+                <td>
+                    Channel audio for generate wave
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    samples
+                </td>
+                <td>
+                    length
+                </td>
+                <td>
+                    Length of the data
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    distance
+                </td>
+                <td>
+                    50
+                </td>
+                <td>
+                    Distance from center
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    length
+                </td>
+                <td>
+                    100
+                </td>
+                <td>
+                    Length of wave
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    top
+                </td>
+                <td>
+                    0
+                </td>
+                <td>
+                    Top margin from path to svg
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    left
+                </td>
+                <td>
+                    0
+                </td>
+                <td>
+                    Left margin from path to svg
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    type
+                </td>
+                <td>
+                    'steps'
+                </td>
+                <td>
+                    'steps', 'mirror' or 'bars'
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    startdeg
+                </td>
+                <td>
+                    0
+                </td>
+                <td>
+                    Where do you start drawing. To make it natural, 0 is equivalent to north.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    enddeg
+                </td>
+                <td>
+                    360
+                </td>
+                <td>
+                    Where do you end drawing
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    invertdeg
+                </td>
+                <td>
+                    false
+                </td>
+                <td>
+                    Reverse the direction of the degrees
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    invertpath
+                </td>
+                <td>
+                    false
+                </td>
+                <td>
+                    Reverse the path vertically
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    paths
+                </td>
+                <td>
+                    [{d:'Q', sdeg: 0, sr:0, deg: 50, r: 100, edeg:100, er:0}]
+                </td>
+                <td>
+                    Array of commands to create the path.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    animation
+                </td>
+                <td>
+                    false
+                </td>
+                <td>
+                    To create animations, paths separated by commas
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    animationframes
+                </td>
+                <td>
+                    10
+                </td>
+                <td>
+                    Frames per second of the animation
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    normalize
+                </td>
+                <td>
+                    true
+                </td>
+                <td>
+                    Normalize audio to adjust waveform
+                </td>
+            </tr>
+        </table>
+
+    </div>
+    <footer id="footer">
+        Developed by <a href="https://twitter.com/jerosoler" target="_blank">Jero Soler</a>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/prism.min.js" integrity="sha256-3teItwIfMuVB74Alnxw/y5HAZ2irOsCULFff3EgbtEs=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/components/prism-css.min.js" integrity="sha256-4ut/7XCv/zjtcNF9GlQL+Jpy3AuQlLt2ExXNtIjZ8Po=" crossorigin="anonymous"></script>
+
+    <script>
+        const resizeWindow = () => {
+            let scale = 1;
+            if(window.innerWidth < 800) {
+                scale = (window.innerWidth-30)/800;
+            } else {
+                scale = 1;
+            }
+            document.documentElement.style.setProperty('--scale', scale);
+        }
+        window.onresize = resizeWindow;
+        resizeWindow();
+    </script>
+    <script type="module">
+        import { getAudioData, linearPath, polarPath } from "./waveform-path.min.js";
+
+        async function AudioPath(file) {
+            const audioData = await getAudioData(file);
+
+            const pathLogo = linearPath(audioData,{ samples: 100,  type: 'steps', top: 20 });
+            document.querySelector("#logo path").setAttribute('d', pathLogo);
+
+        }
+        AudioPath("hello_world.ogg");
+    </script>
+
+</body>
+</html>
