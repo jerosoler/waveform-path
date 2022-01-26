@@ -33,7 +33,7 @@
             <a href="#about">About</a>
             <a href="#install">Install</a>
             <a href="#howtouse">How to use</a>
-            <a href="#demo">Demo</a>
+            <a href="#demos">Demos</a>
             <a href="https://github.com/jerosoler/waveform-path" target="_blank">Github</a>
         </nav>
         <h3 id="about">About</h3>
@@ -207,7 +207,55 @@
                 </td>
             </tr>
         </table>
+        <br>
+        <h4>Linear Path Options</h4>
 
+        <div class="codebox" >
+            <div class="preheader">
+                <svg xmlns="http://www.w3.org/2000/svg" width="54" height="14" viewBox="0 0 54 14"><g fill="none" fill-rule="evenodd" transform="translate(1 1)"><circle cx="6" cy="6" r="6" fill="#FF5F56" stroke="#E0443E" stroke-width=".5"></circle><circle cx="26" cy="6" r="6" fill="#FFBD2E" stroke="#DEA123" stroke-width=".5"></circle><circle cx="46" cy="6" r="6" fill="#27C93F" stroke="#1AAB29" stroke-width=".5"></circle></g></svg>
+            </div>
+            <pre><code class="language-javascript">
+<xmp>// Lineto
+{d:'L', sx: 0, sy:0, ex:50, ey:100 }
+
+// Horitzontal
+{d:'H', sx:10, y:90, ex:90}
+
+// Vertical
+{d:'V', sy:0, x:0, ey:100}
+
+// Cubic Bézier Curve - Not 100%
+{d:'C', sx: 0, sy:0, x: 100, y: 100, ex:100, ey:0 },
+
+// Quadratic Bézier Curve
+{d:'Q', sx: 0, sy:0, x: 50, y: 100, ex:100, ey:0}
+
+// Arc
+{d:'A', sx: 0, sy:100,  ex:100, ey:100, rx:10, ry: 10, angle: 180, arc: 1, sweep: 1}
+
+// Z - Close Path no parameters
+{d:'Z'}
+
+sx = start % x position
+x = center % x position
+ex = end % x position
+
+sy = start % y position
+y = center % y position
+ey = end % y position
+
+These three extra options can be added:
+minshow: 0.2  // Values 0 to 1 - Default 0
+maxshow: 1 // Values 0 to 1 - Default 1
+normalize: true // Normalize value y to 1.
+Example: 
+{d:'H', sx:10, y:90, ex:90, minshow: 0.4, maxshow: 0.6, normalize: true} // Only for y > 0.4 && y < 0.6
+
+For arc view: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#elliptical_arc_curve
+
+            </xmp></code></pre>
+        </div>
+        <br>
         <h4>Polar Options</h4>
 
         <table >
@@ -389,6 +437,48 @@
             </tr>
         </table>
 
+        <h4>Polar Path Options</h4>
+
+        <div class="codebox" >
+            <div class="preheader">
+                <svg xmlns="http://www.w3.org/2000/svg" width="54" height="14" viewBox="0 0 54 14"><g fill="none" fill-rule="evenodd" transform="translate(1 1)"><circle cx="6" cy="6" r="6" fill="#FF5F56" stroke="#E0443E" stroke-width=".5"></circle><circle cx="26" cy="6" r="6" fill="#FFBD2E" stroke="#DEA123" stroke-width=".5"></circle><circle cx="46" cy="6" r="6" fill="#27C93F" stroke="#1AAB29" stroke-width=".5"></circle></g></svg>
+            </div>
+            <pre><code class="language-javascript">
+<xmp>// Lineto
+{d:'L', sdeg:0, sr:0,  edeg:100, er:100 },
+
+// Cubic Bézier Curve - Not 100%
+{d:'C', sdeg: 0, sr:0, deg: 50, r: 100, edeg:100, er:0}
+
+// Quadratic Bézier Curve
+{d:'Q', sdeg: 0, sr:0, deg: 50, r: 100, edeg:100, er:0}
+
+// Arc
+{d:'A', sdeg:80, sr:0, edeg: 0, er:0, rx: 100, ry: 100, angle: 100, arc: 0, sweep: 1 },
+
+// Z - Close Path no parameters
+{d:'Z'}
+
+sdeg = start % deg position
+deg = center % deg position
+edeg = end % deg position
+
+sr = start % radius position
+r = center % radius position
+er = end % radius position
+
+These three extra options can be added:
+minshow: 0.2  // Values 0 to 1 - Default 0
+maxshow: 1 // Values 0 to 1 - Default 1
+normalize: true // Normalize value radius to 1.
+Example: 
+{d:'Q', sdeg: 0, sr:0, deg: 50, r: 100, edeg:100, er:0, minshow: 0.4, maxshow: 0.6, normalize: true} // Only for y > 0.4 && y < 0.6
+
+For arc view: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#elliptical_arc_curve
+
+            </xmp></code></pre>
+        </div>
+        <h3 id="demos">Demos</h3>
     </div>
     <footer id="footer">
         Developed by <a href="https://twitter.com/jerosoler" target="_blank">Jero Soler</a>
