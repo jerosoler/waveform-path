@@ -19,8 +19,7 @@
     "audio",
     "webaudio",
     "audio-player",
-    "music",
-    "webaudio"
+    "music"
   ],
   "author": "Jero Soler",
   "license": "MIT",
