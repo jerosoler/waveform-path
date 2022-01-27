@@ -376,7 +376,7 @@ export const polarPath = (audioBuffer, options) => {
                                 path += `M ${pos_x} ${pos_y} `;
                             }
 
-                            const angle = deg * (i+0.5) * paths[k].angle / 100;
+                            const angle = deg * i * paths[k].angle / 100;
                             const rx = paths[k].rx * deg/100;
                             const ry = paths[k].ry * deg/100;
 

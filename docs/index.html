@@ -31,15 +31,396 @@
     <div class="wrapper">
         <nav>
             <a href="#about">About</a>
+            <a href="#examples">Examples</a>
             <a href="#install">Install</a>
             <a href="#howtouse">How to use</a>
-            <a href="#demos">Demos</a>
             <a href="https://github.com/jerosoler/waveform-path" target="_blank">Github</a>
         </nav>
         <h3 id="about">About</h3>
         <p>Reading CSS-Tricks i discovered the <a href="https://css-tricks.com/making-an-audio-waveform-visualizer-with-vanilla-javascript/" target="_blank">post</a> of <a href="https://twitter.com/ilikescience" target="_blank">Matthew Ström</a> on how to create a waveform which helped me create the library. Look for similar libraries to create custom waveforms. But almost all of them had the same type of wave and based on canvas and not on svg.</p>
         <p>I think svg allows us a lot of customization with css filters or gradients or just lossless scaling. We can also store a path on the server and then retrieve it.</p>
-        <p>With the library we can create two types of waveforms linear and polar. I each method has 3 different types "steps", "mirror" and "bars".</p>
+        <p>With the library we can create 2 types of waveforms <strong>linear</strong> and <strong>polar</strong>. I each method has 3 different types <strong>steps</strong>, <strong>mirror</strong> and <strong>bars</strong>.</p>
+
+        <h3 id="examples">Examples</h3>
+
+        <p>All examples are made with this audio and processed in the browser.</p>
+        <audio controls>
+            <source src="hello_world.ogg" type="audio/ogg">
+          Your browser does not support the audio element.
+        </audio>
+        
+        <div class="examples">
+            <h1>Linear</h1>
+            <svg id="example1" height="140px" width="800px">
+                <defs>
+                    <linearGradient id="lgrad" x1="0%" y1="50%" x2="100%" y2="50%" >
+                        <stop offset="0%" style="stop-color:rgb(0,255,10);stop-opacity:1.00" />
+                        <stop offset="25%" style="stop-color:rgb(0,188,212);stop-opacity:0.70" />
+                        <stop offset="50%" style="stop-color:rgb(238,130,238);stop-opacity:1.00" />
+                        <stop offset="75%" style="stop-color:rgb(103,58,183);stop-opacity:0.70" />
+                        <stop offset="100%" style="stop-color:rgb(233,30,99);stop-opacity:1.00" />
+                    </linearGradient>
+                </defs>
+                <path style="fill:none; stroke-width: 3px; stroke:url(#lgrad)" />
+            </svg>
+            <details>
+                <summary>View Options</summary>
+                <pre><code class="language-javascript">{ 
+    samples: 100, type: 'steps', top: 20,
+    paths: [ 
+        {d:'L', sx: 0, sy:0, ex:50, ey:100 },
+        {d:'L', sx: 50, sy:100, ex:100, ey:0 }
+    ]
+}</code></pre>
+            </details>
+
+            <svg id="example2" height="140px" width="800px">
+                <path style="fill:none; stroke-width: 4px;  stroke-linecap: round; stroke:url(#lgrad)"/>
+            </svg>
+            <details>
+                <summary>View Options</summary>
+                <pre><code class="language-javascript">{ 
+    samples: 100, type: 'mirror', top: 20, 
+    paths: [ 
+        {d:'V', sy: 0, x:50, ey:100 }
+    ]
+}</code></pre>
+            </details>
+
+            <svg id="example3" height="140px" width="800px">
+                <path style="fill:none; stroke-width: 3px;  stroke-linecap: round; stroke:url(#lgrad)"/>
+            </svg>
+            <details>
+                <summary>View Options</summary>
+                <pre><code class="language-javascript">{ 
+    samples: 100,  type: 'steps', normalize: true, top: 20,
+}</code></pre>
+            </details>
+
+            <svg id="example4" height="140px" width="800px">
+                <path style="stroke:url(#lgrad); stroke-width: 2px;  fill:url(#lgrad)"/>
+            </svg>
+            <details>
+                <summary>View Options</summary>
+                <pre><code class="language-javascript">{ 
+    samples: 100, type: 'mirror', top: 20,
+    paths: [
+        {d:'Q', sx: 20, sy:0, x: 50, y: 100, ex:80, ey:0}
+    ],
+}</code></pre>
+            </details>
+
+            <svg id="example5" height="140px" width="800px">
+                <path style="stroke:none; stroke-width: 0px;  fill:url(#lgrad)"/>
+            </svg>
+            <details>
+                <summary>View Options</summary>
+                <pre><code class="language-javascript">{ 
+    samples: 75, type: 'mirror', top: 20,
+    paths: [
+        //Five
+        {d:'A', sx: 35, sy:85,  ex:65, ey:85, rx:10, ry: 10, angle: 180, arc: 1, sweep: 1, minshow: 0.8, maxshow: 1, normalize: true},  
+        {d:'A', sx: 35, sy:85,  ex:65, ey:85, rx:10, ry: 10, angle: 180, arc: 1, sweep: 0, minshow: 0.8, maxshow: 1, normalize: true},
+
+        {d:'A', sx: 30, sy:70,  ex:70, ey:70, rx:20, ry: 20, angle: 180, arc: 1, sweep: 1, minshow: 0.8, maxshow: 1, normalize: true},
+        {d:'A', sx: 30, sy:70,  ex:70, ey:70, rx:20, ry: 20, angle: 180, arc: 1, sweep: 0, minshow: 0.8, maxshow: 1, normalize: true},
+
+        {d:'A', sx: 25, sy:55,  ex:75, ey:55, rx:20, ry: 20, angle: 180, arc: 1, sweep: 1, minshow: 0.8, maxshow: 1, normalize: true},
+        {d:'A', sx: 25, sy:55,  ex:75, ey:55, rx:20, ry: 20, angle: 180, arc: 1, sweep: 0, minshow: 0.8, maxshow: 1, normalize: true},
+
+        {d:'A', sx: 20, sy:40,  ex:80, ey:40, rx:20, ry: 20, angle: 180, arc: 1, sweep: 1, minshow: 0.8, maxshow: 1, normalize: true},
+        {d:'A', sx: 20, sy:40,  ex:80, ey:40, rx:20, ry: 20, angle: 180, arc: 1, sweep: 0, minshow: 0.8, maxshow: 1, normalize: true},
+
+        {d:'A', sx: 15, sy:20,  ex:85, ey:20, rx:20, ry: 20, angle: 180, arc: 1, sweep: 1, minshow: 0.8, maxshow: 1, normalize: true},
+        {d:'A', sx: 15, sy:20,  ex:85, ey:20, rx:20, ry: 20, angle: 180, arc: 1, sweep: 0, minshow: 0.8, maxshow: 1, normalize: true},
+
+        {d:'A', sx: 10, sy:0,  ex:90, ey:0, rx:20, ry: 20, angle: 180, arc: 1, sweep: 1, minshow: 0.8, maxshow: 1, normalize: true},
+        {d:'A', sx: 10, sy:0,  ex:90, ey:0, rx:20, ry: 20, angle: 180, arc: 1, sweep: 0, minshow: 0.8, maxshow: 1, normalize: true},
+
+        //Four
+        {d:'A', sx: 30, sy:70,  ex:70, ey:70, rx:20, ry: 20, angle: 180, arc: 1, sweep: 1, minshow: 0.6, maxshow: 0.8, normalize: true },
+        {d:'A', sx: 30, sy:70,  ex:70, ey:70, rx:20, ry: 20, angle: 180, arc: 1, sweep: 0, minshow: 0.6, maxshow: 0.8, normalize: true },
+
+        {d:'A', sx: 25, sy:55,  ex:75, ey:55, rx:20, ry: 20, angle: 180, arc: 1, sweep: 1, minshow: 0.6, maxshow: 0.8, normalize: true },
+        {d:'A', sx: 25, sy:55,  ex:75, ey:55, rx:20, ry: 20, angle: 180, arc: 1, sweep: 0, minshow: 0.6, maxshow: 0.8, normalize: true },
+
+        {d:'A', sx: 20, sy:40,  ex:80, ey:40, rx:20, ry: 20, angle: 180, arc: 1, sweep: 1, minshow: 0.6, maxshow: 0.8, normalize: true },
+        {d:'A', sx: 20, sy:40,  ex:80, ey:40, rx:20, ry: 20, angle: 180, arc: 1, sweep: 0, minshow: 0.6, maxshow: 0.8, normalize: true },
+
+        {d:'A', sx: 15, sy:20,  ex:85, ey:20, rx:20, ry: 20, angle: 180, arc: 1, sweep: 1, minshow: 0.6, maxshow: 0.8, normalize: true },
+        {d:'A', sx: 15, sy:20,  ex:85, ey:20, rx:20, ry: 20, angle: 180, arc: 1, sweep: 0, minshow: 0.6, maxshow: 0.8, normalize: true },
+
+        {d:'A', sx: 10, sy:0,  ex:90, ey:0, rx:20, ry: 20, angle: 180, arc: 1, sweep: 1, minshow: 0.6, maxshow: 0.8, normalize: true },
+        {d:'A', sx: 10, sy:0,  ex:90, ey:0, rx:20, ry: 20, angle: 180, arc: 1, sweep: 0, minshow: 0.6, maxshow: 0.8, normalize: true },
+
+        //Three
+        {d:'A', sx: 20, sy:40,  ex:80, ey:40, rx:20, ry: 20, angle: 180, arc: 1, sweep: 1, minshow: 0.4, maxshow: 0.6, normalize: true },
+        {d:'A', sx: 20, sy:40,  ex:80, ey:40, rx:20, ry: 20, angle: 180, arc: 1, sweep: 0, minshow: 0.4, maxshow: 0.6, normalize: true },
+
+        {d:'A', sx: 15, sy:20,  ex:85, ey:20, rx:20, ry: 20, angle: 180, arc: 1, sweep: 1, minshow: 0.4, maxshow: 0.6, normalize: true },
+        {d:'A', sx: 15, sy:20,  ex:85, ey:20, rx:20, ry: 20, angle: 180, arc: 1, sweep: 0, minshow: 0.4, maxshow: 0.6, normalize: true },
+
+        {d:'A', sx: 10, sy:0,  ex:90, ey:0, rx:20, ry: 20, angle: 180, arc: 1, sweep: 1, minshow: 0.4, maxshow: 0.6, normalize: true },
+        {d:'A', sx: 10, sy:0,  ex:90, ey:0, rx:20, ry: 20, angle: 180, arc: 1, sweep: 0, minshow: 0.4, maxshow: 0.6, normalize: true },
+
+        //Two
+        {d:'A', sx: 15, sy:20,  ex:85, ey:20, rx:20, ry: 20, angle: 180, arc: 1, sweep: 1, minshow: 0.2, maxshow: 0.4, normalize: true },
+        {d:'A', sx: 15, sy:20,  ex:85, ey:20, rx:20, ry: 20, angle: 180, arc: 1, sweep: 0, minshow: 0.2, maxshow: 0.4, normalize: true },
+
+        {d:'A', sx: 10, sy:0,  ex:90, ey:0, rx:20, ry: 20, angle: 180, arc: 1, sweep: 1, minshow: 0.2, maxshow: 0.4, normalize: true },
+        {d:'A', sx: 10, sy:0,  ex:90, ey:0, rx:20, ry: 20, angle: 180, arc: 1, sweep: 0, minshow: 0.2, maxshow: 0.4, normalize: true },
+
+        //One
+        {d:'A', sx: 25, sy:0,  ex:75, ey:0, rx:20, ry: 20, angle: 180, arc: 1, sweep: 1, minshow: 0, maxshow: 0.2, normalize: true },
+        {d:'A', sx: 25, sy:0,  ex:75, ey:0, rx:20, ry: 20, angle: 180, arc: 1, sweep: 0, minshow: 0, maxshow: 0.2, normalize: true },
+        
+    ],
+}</code></pre>
+        </details>
+
+        <svg id="example6" height="140px" width="800px">
+            <path style="stroke:url(#lgrad); stroke-width: 3px;  fill:none"/>
+        </svg>
+        <details>
+            <summary>View Options</summary>
+            <pre><code class="language-javascript">{ 
+    samples: 50,  type: 'steps',  top: 20,
+    paths: [
+        {d:'V', sy:0, x:0, ey:100, },
+        {d:'A', sx: 0, sy:100,  ex:100, ey:100, rx:10, ry: 10, angle: 180, arc: 1, sweep: 1},  
+        {d:'V', sy:0, x:100, ey:100, },
+    ],
+}</code></pre>
+        </details>
+
+        <svg id="example7" height="140px" width="800px">
+            <path style="stroke:url(#lgrad); stroke-width: 3px;  fill:url(#lgrad)"/>
+        </svg>
+        <details>
+            <summary>View Options</summary>
+            <pre><code class="language-javascript">{ 
+    samples: 100, type: 'steps', top: 20,
+    paths: [
+        {d:'V', sy:0, x:0, ey:100, },
+        {d:'A', sx: 0, sy:100,  ex:100, ey:100, rx:10, ry: 10, angle: 180, arc: 1, sweep: 1},  
+        {d:'V', sy:100, x:100, ey:0, },
+        {d:'A', sx: 100, sy:0,  ex:0, ey:0, rx:10, ry: 10, angle: 180, arc: 1, sweep: 0},
+    ],
+}</code></pre>
+        </details>
+
+        <svg id="example8" height="140px" width="800px">
+            <path style="fill:none; stroke-width: 4px;  stroke-linecap: round; stroke:url(#lgrad)"/>
+        </svg>
+        <details>
+            <summary>View Options</summary>
+            <pre><code class="language-javascript">{ 
+    samples: 100, type: 'bars', top: 20, 
+    paths: [ 
+        {d:'V', sy: 0, x:50, ey:100 }
+    ]
+}</code></pre>
+        </details>
+
+        <svg id="example9" height="140px" width="800px">
+            <path style="fill:none; stroke-width: 3;  stroke:url(#lgrad)"/>
+        </svg>
+        <details>
+            <summary>View Options</summary>
+            <pre><code class="language-javascript">{ 
+    samples: 75, type: 'mirror', top: 20, 
+    paths: [ 
+        {d:'L', sx: 0, sy:20, ex:100, ey:-1.5, normalize: true, minshow: 0, maxshow: 1 },
+        {d:'L', sx: -100, sy:40, ex:0, ey:20, normalize: true, minshow: 0.20, maxshow: 1 },
+        {d:'L', sx: -200, sy:60, ex:-100, ey:40, normalize: true, minshow: 0.40, maxshow: 1 },
+        {d:'L', sx: -300, sy:80, ex:-200, ey:60, normalize: true, minshow: 0.60, maxshow: 1 },
+        {d:'L', sx: -400, sy:100, ex:-300, ey:80, normalize: true, minshow: 0.80, maxshow: 1 }
+    ]
+}</code></pre>
+        </details>
+
+        <svg id="example10" height="140px" width="800px">
+            <path style="fill:none; stroke-width: 3;  stroke:url(#lgrad)" >
+                <animate
+                attributeName="d"
+                dur="2.54s"
+                repeatCount="indefinite"
+                calcMode="linear"
+                values=""
+            />
+            </path>
+        </svg>
+        <details>
+            <summary>View Options</summary>
+            <pre><code class="language-javascript">{ 
+    samples: 100, type: 'steps', top: 20, animation: true
+}</code></pre>
+        </details>
+
+        <svg id="example11" height="140px" width="800px">
+            <path style="fill:none; stroke-width: 3;  stroke:url(#lgrad)" >
+                <animate
+                attributeName="d"
+                dur="2.54s"
+                repeatCount="indefinite"
+                calcMode="linear"
+                values=""
+            />
+            </path>
+        </svg>
+        <details>
+            <summary>View Options</summary>
+            <pre><code class="language-javascript">{ 
+    samples: 100, type: 'bars', top: 20, animation: true,
+    paths: [ 
+        {d:'V', sy: 0, x:50, ey:100 }
+    ]
+}</code></pre>
+        </details>
+        
+        <h1>Polar</h1>
+        <svg class="round" id="example12" height="400px" width="400px">
+            <defs>
+                <radialGradient id="rgrad" cx="50%" cy="50%" r="50%" >
+                 
+                         <stop offset="0%" style="stop-color:rgb(0,255,10);stop-opacity:1.00" />
+                         <stop offset="25%" style="stop-color:rgb(0,188,212);stop-opacity:0.70" />
+                         <stop offset="50%" style="stop-color:rgb(238,130,238);stop-opacity:1.00" />
+                         <stop offset="75%" style="stop-color:rgb(103,58,183);stop-opacity:0.70" />
+                         <stop offset="100%" style="stop-color:rgb(233,30,99);stop-opacity:1.00" />
+             
+                 </radialGradient>
+               </defs>
+            <path style=" stroke:url(#rgrad); stroke-width: 2px; fill: none;"/>
+        </svg>
+        <details>
+            <summary>View Options</summary>
+            <pre><code class="language-javascript">{ 
+    samples: 90, type: 'steps',
+    left: 200, top: 200, distance: 100, length: 50
+}</code></pre>
+        </details>
+
+        <svg class="round" id="example13" height="400px" width="400px">
+            <path style=" stroke:url(#rgrad); stroke-width: 5px; fill: none; stroke-linecap: round;"/>
+        </svg>
+        <details>
+            <summary>View Options</summary>
+            <pre><code class="language-javascript">{ 
+    samples: 90, type: 'bars',
+    left: 200, top: 200, distance: 100, length: 50,
+    paths: [
+        {d: 'L', sdeg:50, sr:0, edeg: 50, er:100 },
+    ]
+}</code></pre>
+        </details>
+
+        <svg class="round" id="example14" height="400px" width="400px">
+            <path style=" stroke:url(#rgrad); stroke-width: 2px; fill: url(#rgrad); "/>
+        </svg>
+        <details>
+            <summary>View Options</summary>
+            <pre><code class="language-javascript">{ 
+    samples: 90, type: 'mirror',
+    left: 200, top: 200, distance: 100, length: 100
+}</code></pre>
+        </details>
+
+
+        <svg class="round" id="example15" height="400px" width="400px">
+            <path style=" stroke:url(#rgrad); stroke-width: 2px; fill: none; "/>
+        </svg>
+        <details>
+            <summary>View Options</summary>
+            <pre><code class="language-javascript">{ 
+    samples: 90, type: 'steps',
+    left: 200, top: 200, distance: 100, length: 100,
+    startdeg: 270, enddeg: 90,
+    invertdeg: true,
+    invertpath: true
+}</code></pre>
+        </details>
+
+        <svg class="round" id="example16" height="400px" width="400px">
+            <path style=" stroke:url(#rgrad); stroke-width: 2px; fill: none; "/>
+        </svg>
+        <details>
+            <summary>View Options</summary>
+            <pre><code class="language-javascript">{ 
+    samples: 90, type: 'steps',
+    left: 200, top: 200, distance: 100, length: 100,
+    paths: [
+        {d:'L', sdeg:0, sr:0,  edeg:0, er:90 },
+        {d:'A', sdeg:0, sr:90, edeg: 100, er:90, rx: 5, ry: 5, angle: 100, arc: 1, sweep: 1 },
+        {d:'L', sdeg:100, sr:90,  edeg:100, er:0 },
+    ]
+}</code></pre>
+        </details>
+
+
+        <svg class="round" id="example17" height="400px" width="400px">
+            <path style=" stroke:url(#rgrad); stroke-width: 2px; fill: none; ">
+                <animate
+                attributeName="d"
+                dur="2.54s"
+                repeatCount="indefinite"
+                calcMode="linear"
+                values=""
+            />
+            </path>
+        </svg>
+        <details>
+            <summary>View Options</summary>
+            <pre><code class="language-javascript">{ 
+    samples: 90, type: 'steps',
+    left: 200, top: 200, distance: 100, length: 100,
+    animation: true
+}</code></pre>
+        </details>
+
+
+        <svg class="round" id="example18" height="400px" width="400px">
+            <path style=" stroke:url(#rgrad); stroke-width: 2px; fill: none; ">
+                <animate
+                attributeName="d"
+                dur="2.54s"
+                repeatCount="indefinite"
+                calcMode="linear"
+                values=""
+            />
+            </path>
+        </svg>
+        <details>
+            <summary>View Options</summary>
+            <pre><code class="language-javascript">{ 
+    samples: 90, type: 'steps',
+    left: 200, top: 200, distance: 100, length: 100,
+    animation: true,
+    paths: [
+        {d:'L', sdeg:0, sr:0,  edeg:0, er:90 },
+        {d:'A', sdeg:0, sr:90, edeg: 100, er:90, rx: 5, ry: 5, angle: 100, arc: 1, sweep: 1 },
+        {d:'L', sdeg:100, sr:90,  edeg:100, er:0 },
+    ]
+}</code></pre>
+        </details>
+
+        <h1>Test with Microphone</h1>
+
+        <svg id="Mic1" height="140px" width="800px">
+            <path style="fill:none; stroke-width: 4px;  stroke-linecap: round; stroke:url(#lgrad)"/>
+        </svg>
+    
+
+        <button id="startmic">Start</button>
+
+        <svg class="round" id="Mic2" height="400px" width="400px">
+            <path style=" stroke:url(#rgrad); stroke-width: 2px; fill: none; "/>
+        </svg>
+    
+
+
+        </div>
+
         <h3 id="install">Install</h3>
         <h4>NPM</h4>
         <div class="codebox" data-ioaa-animation="animateLeft">
@@ -247,7 +628,7 @@ ey = end % y position
 These three extra options can be added:
 minshow: 0.2  // Values 0 to 1 - Default 0
 maxshow: 1 // Values 0 to 1 - Default 1
-normalize: true // Normalize value y to 1.
+normalize: true // Normalize value y to 1. - Default false
 Example: 
 {d:'H', sx:10, y:90, ex:90, minshow: 0.4, maxshow: 0.6, normalize: true} // Only for y > 0.4 && y < 0.6
 
@@ -470,7 +851,7 @@ er = end % radius position
 These three extra options can be added:
 minshow: 0.2  // Values 0 to 1 - Default 0
 maxshow: 1 // Values 0 to 1 - Default 1
-normalize: true // Normalize value radius to 1.
+normalize: true // Normalize value radius to 1. - Default false
 Example: 
 {d:'Q', sdeg: 0, sr:0, deg: 50, r: 100, edeg:100, er:0, minshow: 0.4, maxshow: 0.6, normalize: true} // Only for y > 0.4 && y < 0.6
 
@@ -478,7 +859,6 @@ For arc view: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#ellip
 
             </xmp></code></pre>
         </div>
-        <h3 id="demos">Demos</h3>
     </div>
     <footer id="footer">
         Developed by <a href="https://twitter.com/jerosoler" target="_blank">Jero Soler</a>
@@ -490,28 +870,24 @@ For arc view: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#ellip
     <script>
         const resizeWindow = () => {
             let scale = 1;
+            let scaleRound = 1;
             if(window.innerWidth < 800) {
                 scale = (window.innerWidth-30)/800;
             } else {
                 scale = 1;
             }
+
+            if(window.innerWidth < 400) {
+                scaleRound = (window.innerWidth-20)/400;
+            } else {
+                scaleRound = 1;
+            }
             document.documentElement.style.setProperty('--scale', scale);
+            document.documentElement.style.setProperty('--scale-round', scaleRound);
         }
         window.onresize = resizeWindow;
         resizeWindow();
     </script>
-    <script type="module">
-        import { getAudioData, linearPath, polarPath } from "./waveform-path.min.js";
-
-        async function AudioPath(file) {
-            const audioData = await getAudioData(file);
-
-            const pathLogo = linearPath(audioData,{ samples: 100,  type: 'steps', top: 20 });
-            document.querySelector("#logo path").setAttribute('d', pathLogo);
-
-        }
-        AudioPath("hello_world.ogg");
-    </script>
-
+    <script type="module" src="main.js"></script>
 </body>
 </html>
