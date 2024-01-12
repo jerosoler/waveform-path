@@ -1,4 +1,4 @@
-import { getAudioData, linearPath, polarPath } from "./waveform-path.min.js";
+import { getAudioData, linearPath, polarPath } from "./waveform-path.es.js";
 
 async function AudioPath(file) {
     const audioData = await getAudioData(file);
