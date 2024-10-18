@@ -18,7 +18,7 @@ npm install waveform-path -s
 ```
 
 ## Download 
-Download the last realease of repo and copy waveform-path.min.js from dist folder.
+Download the last realease of repo and copy waveform-path.es.js from dist folder.
 
 
 # How to use
